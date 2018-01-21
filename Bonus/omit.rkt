@@ -1,0 +1,84 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname omit) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #t)))
+(define (omit1 str)
+  (local [(define loc (string->list str))
+          (define remove-n (λ (n list) (cond
+                                         [(empty? list) empty]
+                                         [(<= n 0)(rest list)]
+                                         [else (cons (first list) (remove-n (sub1 n) (rest list)))])))
+          (define remove-dups (λ(list used)(cond[(empty? list) used]
+                                                [(member? (first list) used) (remove-dups (rest list) used)]
+                                                [else (remove-dups (rest list) (cons (first list) used))])))
+          (define (omit0 loc) (local [(define next-level (build-list (length loc) (λ(x)(remove-n x loc))))]
+                                (append next-level (omit-0-list next-level))))
+          (define (omit-0-list lloc) (foldr (λ(x y)(append (omit0 x) y)) empty lloc))]
+    (map list->string (remove-dups (cons loc (omit0 loc)) '()))))
+
+
+
+
+
+
+
+(define (omit2 str) 
+  (map
+   (λ(l)(list->string (map (λ(z)(third z)) (filter (λ(x)(= (first x) 1)) l))))
+   (local [(define loc (string->list str))
+           (define len (length loc))]
+     (build-list (expt 2 len)
+                 (λ(n)(foldr (λ(x y)(local [(define s (cond [(empty? y) n][else (second(first y))]))(define d (floor (/ s 2)))](cons (list (cond [(odd? s) 1][else 0]) d x) y)))
+                             empty
+                             loc))))))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(define (omit2.1 str) 
+  (foldr (λ(x y)(cons (list->string (map third (filter (λ(s)(first s)) x))) y)) empty
+         (build-list (expt 2 (length (string->list str)))(λ(n)(foldr (λ(x y)(local [(define s (cadar y))](cons (list (cond [(odd? s) #t][else #f]) (floor(/ s 2)) x) y)))(list (list #f n 0))(string->list str))))))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

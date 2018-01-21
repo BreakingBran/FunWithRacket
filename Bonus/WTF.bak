@@ -1,0 +1,12 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-advanced-reader.ss" "lang")((modname WTF) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #t #t none #f () #t)))
+(define Y (λ(f)((λ(x)(f (x x)))(λ(x)(f (x x))))))
+
+(define Y-combinator-recursion-factorial
+    (Y
+     (lambda (factorial)
+       (lambda (n)
+         (cond ((= n 0) 1)
+               ((= n 1) 1)
+               (else (* n (factorial (- n 1)))))))))
